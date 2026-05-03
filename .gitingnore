@@ -1,0 +1,13 @@
+*.class
+*.jar
+*.war
+
+.metadata/
+bin/
+target/
+.settings/
+
+.project
+.classpath
+
+node_modules/
