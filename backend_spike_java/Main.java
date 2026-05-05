@@ -1,15 +1,33 @@
-import java.sql.Connection;
-
 public class Main {
 
     public static void main(String[] args) {
 
-        Connection conexion = Conexion.getConexion();
+        ClienteDAO clienteDAO = new ClienteDAO();
 
-        if (conexion != null) {
-            System.out.println("🎉 Todo funciona correctamente");
-        } else {
-            System.out.println("⚠️ No se pudo conectar");
-        }
+        // 🔹 INSERTAR CLIENTE
+        Cliente cliente = new Cliente(
+                0,
+                "Cliente Prueba Java",
+                "clientejava@spike.com",
+                "Tunja - Boyacá",
+                "12345",
+                "cliente"
+        );
+
+        clienteDAO.insertarCliente(cliente);
+
+        // 🔹 CONSULTAR CLIENTES
+        clienteDAO.consultarClientes();
+
+        // 🔹 ACTUALIZAR CLIENTE
+        clienteDAO.actualizarCliente(
+                1,
+                "Cliente Actualizado Java",
+                "actualizado@spike.com",
+                "Bogotá - Colombia"
+        );
+
+        // 🔹 ELIMINAR CLIENTE (opcional por ahora)
+        // clienteDAO.eliminarCliente(1);
     }
 }
