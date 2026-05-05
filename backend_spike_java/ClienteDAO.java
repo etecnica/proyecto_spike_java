@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ClienteDAO {
 
@@ -93,4 +94,34 @@ public class ClienteDAO {
             e.printStackTrace();
         }
     }
+
+    public ArrayList<Cliente> listarClientes() {
+    ArrayList<Cliente> lista = new ArrayList<>();
+    String sql = "SELECT id, nombre, correo, direccionEntrega, password, rol FROM cliente";
+
+    try {
+        Connection conexion = Conexion.getConexion();
+        PreparedStatement ps = conexion.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Cliente cliente = new Cliente(
+                    rs.getInt("id"),
+                    rs.getString("nombre"),
+                    rs.getString("correo"),
+                    rs.getString("direccionEntrega"),
+                    rs.getString("password"),
+                    rs.getString("rol")
+            );
+
+            lista.add(cliente);
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error al listar clientes");
+        e.printStackTrace();
+    }
+
+    return lista;
+}
 }
