@@ -32,6 +32,41 @@ public class ClienteServlet extends HttpServlet {
         out.println("<div class='card'>");
         out.println("<h3>Clientes registrados desde Java Servlet</h3>");
 
+        out.println("<h3>Actualizar cliente</h3>");
+out.println("<form method='post' action='ClienteServlet'>");
+out.println("<input type='hidden' name='accion' value='actualizar'>");
+out.println("<input type='hidden' name='vista' value='html'>");
+
+out.println("<label>ID del cliente</label>");
+out.println("<input type='text' name='id' required>");
+
+out.println("<label>Nuevo nombre</label>");
+out.println("<input type='text' name='nombre' required>");
+
+out.println("<label>Nuevo correo</label>");
+out.println("<input type='email' name='correo' required>");
+
+out.println("<label>Nueva dirección</label>");
+out.println("<input type='text' name='direccionEntrega' required>");
+
+out.println("<button class='btn' type='submit' style='margin-top:10px;'>Actualizar cliente</button>");
+out.println("</form>");
+
+out.println("<hr>");
+
+out.println("<h3>Eliminar cliente</h3>");
+out.println("<form method='post' action='ClienteServlet'>");
+out.println("<input type='hidden' name='accion' value='eliminar'>");
+out.println("<input type='hidden' name='vista' value='html'>");
+
+out.println("<label>ID del cliente a eliminar</label>");
+out.println("<input type='text' name='id' required>");
+
+out.println("<button class='btn secondary' type='submit' style='margin-top:10px;'>Eliminar cliente</button>");
+out.println("</form>");
+
+out.println("<hr>");
+
         for (Cliente cliente : clientes) {
             out.println("<p>");
             out.println("<strong>ID:</strong> " + cliente.getId() + "<br>");
@@ -61,6 +96,28 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     }
 
     ClienteDAO clienteDAO = new ClienteDAO();
+    if (accion.equals("login")) {
+
+    String correo = request.getParameter("correo");
+    String password = request.getParameter("password");
+
+    Cliente cliente = clienteDAO.validarLogin(correo, password);
+
+    PrintWriter out = response.getWriter();
+
+    if (cliente != null) {
+        out.println("{\"id\":" + cliente.getId()
+                + ",\"correo\":\"" + cliente.getCorreo()
+                + "\",\"nombre\":\"" + cliente.getNombre()
+                + "\",\"rol\":\"" + cliente.getRol()
+                + "\"}");
+    } else {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        out.println("{\"error\":\"Credenciales inválidas\"}");
+    }
+
+    return;
+}
 
     if (accion.equals("insertar")) {
 
@@ -95,7 +152,13 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         clienteDAO.eliminarCliente(id);
     }
 
+    String vista = request.getParameter("vista");
+
+if ("html".equals(vista)) {
+    response.sendRedirect("ClienteServlet");
+} else {
     PrintWriter out = response.getWriter();
     out.println("{\"mensaje\":\"Operación realizada correctamente\"}");
+}
 }
 }

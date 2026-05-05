@@ -124,4 +124,36 @@ public class ClienteDAO {
 
     return lista;
 }
+public Cliente validarLogin(String correo, String password) {
+    Cliente cliente = null;
+
+    String sql = "SELECT id, nombre, correo, direccionEntrega, password, rol FROM cliente WHERE correo = ? AND password = ?";
+
+    try {
+        Connection conexion = Conexion.getConexion();
+        PreparedStatement ps = conexion.prepareStatement(sql);
+
+        ps.setString(1, correo);
+        ps.setString(2, password);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            cliente = new Cliente(
+                    rs.getInt("id"),
+                    rs.getString("nombre"),
+                    rs.getString("correo"),
+                    rs.getString("direccionEntrega"),
+                    rs.getString("password"),
+                    rs.getString("rol")
+            );
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error al validar login");
+        e.printStackTrace();
+    }
+
+    return cliente;
+}
 }

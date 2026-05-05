@@ -107,6 +107,17 @@ function renderUserArea(){
       showMessage('Sesión cerrada','ok');
     });
 
+    
+    if(session.role === "admin"){
+  const adminBtn = document.createElement('button');
+  adminBtn.className = 'btn secondary';
+  adminBtn.textContent = 'Clientes Java';
+  adminBtn.addEventListener('click', () => {
+    window.location.href = 'ClienteServlet';
+  });
+
+  userArea.appendChild(adminBtn);
+}
     userArea.appendChild(span);
     userArea.appendChild(btn);
 
@@ -550,16 +561,16 @@ document.getElementById('btnLogin').addEventListener('click', async () => {
   }
 
   try{
-    const respuesta = await fetch(`${API_URL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        correo: email,
-        password: pass
-      })
-    });
+  const datos = new URLSearchParams();
+datos.append("accion", "login");
+datos.append("correo", email);
+datos.append("password", pass);
+
+const respuesta = await fetch(`${API_URL}/ClienteServlet`, {
+  method: "POST",
+  body: datos
+});
+     
 
     const data = await respuesta.json();
 
