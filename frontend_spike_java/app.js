@@ -84,6 +84,7 @@ function setSession(user){
   renderUserArea();
 }
 
+
 function clearSession(){
   session = null;
   saveSession();
