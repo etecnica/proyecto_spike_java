@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Spike Investments — Prototipo Funcional</title>
+  <meta name="description" content="Prototipo funcional de Spike Investments" />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header role="banner" class="site-header">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">SI</div>
+      <div>
+        <div class="brand-title">Spike Investments</div>
+        <div class="brand-sub">Prototipo funcional — Web App</div>
+      </div>
+    </div>
+
+    <nav id="mainNav" role="navigation" aria-label="Navegación principal">
+      <button data-view="home">Inicio</button>
+      <button data-view="catalog">Catálogo</button>
+      <button data-view="orders">Pedidos</button>
+      <button data-view="notifications">Notificaciones</button>
+      <div id="userArea" class="user-area"></div>
+    </nav>
+  </header>
+
+  <main>
+    <div id="messages" aria-live="polite"></div>
+
+    <div class="layout">
+      <section id="content" tabindex="0" aria-live="polite">
+        <!-- Contenido inyectado -->
+      </section>
+
+      <aside class="sidebar" aria-label="Panel lateral">
+        <div class="card" id="authCard" aria-labelledby="authTitle">
+          <h3 id="authTitle">Bienvenido</h3>
+          <div id="authForms">
+            <!-- Login -->
+            <div id="loginForm">
+              <label for="login-email">Correo</label>
+              <input id="login-email" type="email" autocomplete="username" />
+              <label for="login-pass">Contraseña</label>
+              <input id="login-pass" type="password" autocomplete="current-password" />
+              <div class="btn-row">
+                <button id="btnLogin" class="btn">Iniciar sesión</button>
+                <button id="btnShowRegister" class="btn secondary">Registrarse</button>
+              </div>
+              <div class="small">Admin precargado: <strong>admin@spike.test</strong> - <strong>Admin123!</strong></div>
+            </div>
+
+            <!-- Register -->
+            <div id="registerForm" class="hidden">
+              <label for="reg-name">Nombres</label>
+              <input id="reg-name" type="text" />
+              <label for="reg-last">Apellidos</label>
+              <input id="reg-last" type="text" />
+              <label for="reg-email">Correo</label>
+              <input id="reg-email" type="email" />
+              <label for="reg-pass">Contraseña</label>
+              <input id="reg-pass" type="password" />
+              <label for="reg-dob">Fecha de nacimiento</label>
+              <input id="reg-dob" type="date" />
+              <div class="btn-row">
+                <button id="btnRegister" class="btn">Crear cuenta</button>
+                <button id="btnCancelRegister" class="btn secondary">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="cartCard" aria-live="polite">
+          <h3>Carrito</h3>
+          <div id="cartList" class="small">No hay productos en el carrito</div>
+          <div class="btn-row" style="margin-top:10px">
+            <button id="btnCheckout" class="btn">Comprar</button>
+            <button id="btnClearCart" class="btn secondary">Limpiar</button>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    Spike Investments — Prototipo funcional | Datos en Prueba_2 Mysql
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
