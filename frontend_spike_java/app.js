@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "http://localhost:8080/spike";
 
 const storage = {
   load(k, fb){
@@ -613,18 +613,16 @@ document.getElementById('btnRegister').addEventListener('click', async () => {
   const nombreCompleto = `${name} ${last}`;
 
   try{
-    const respuesta = await fetch(`${API_URL}/clientes`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        nombre: nombreCompleto,
-        correo: email,
-        direccionEntrega: "Sin definir",
-        password: pass
-      })
-    });
+   const datos = new URLSearchParams();
+datos.append("nombre", nombreCompleto);
+datos.append("correo", email);
+datos.append("direccionEntrega", "Sin definir");
+datos.append("password", pass);
+
+const respuesta = await fetch(`${API_URL}/ClienteServlet`, {
+  method: "POST",
+  body: datos
+});
 
     const data = await respuesta.json();
 

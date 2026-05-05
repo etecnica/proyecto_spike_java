@@ -47,4 +47,31 @@ public class ClienteServlet extends HttpServlet {
         out.println("</body>");
         out.println("</html>");
     }
+    @Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+
+    request.setCharacterEncoding("UTF-8");
+    response.setContentType("application/json;charset=UTF-8");
+
+    String nombre = request.getParameter("nombre");
+    String correo = request.getParameter("correo");
+    String direccionEntrega = request.getParameter("direccionEntrega");
+    String password = request.getParameter("password");
+
+    Cliente cliente = new Cliente(
+            0,
+            nombre,
+            correo,
+            direccionEntrega,
+            password,
+            "cliente"
+    );
+
+    ClienteDAO clienteDAO = new ClienteDAO();
+    clienteDAO.insertarCliente(cliente);
+
+    PrintWriter out = response.getWriter();
+    out.println("{\"mensaje\":\"Cliente registrado correctamente\"}");
+}
 }
