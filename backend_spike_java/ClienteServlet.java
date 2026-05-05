@@ -47,31 +47,55 @@ public class ClienteServlet extends HttpServlet {
         out.println("</body>");
         out.println("</html>");
     }
-    @Override
+   @Override
 protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
     request.setCharacterEncoding("UTF-8");
     response.setContentType("application/json;charset=UTF-8");
 
-    String nombre = request.getParameter("nombre");
-    String correo = request.getParameter("correo");
-    String direccionEntrega = request.getParameter("direccionEntrega");
-    String password = request.getParameter("password");
+    String accion = request.getParameter("accion");
 
-    Cliente cliente = new Cliente(
-            0,
-            nombre,
-            correo,
-            direccionEntrega,
-            password,
-            "cliente"
-    );
+    if (accion == null) {
+        accion = "insertar";
+    }
 
     ClienteDAO clienteDAO = new ClienteDAO();
-    clienteDAO.insertarCliente(cliente);
+
+    if (accion.equals("insertar")) {
+
+        String nombre = request.getParameter("nombre");
+        String correo = request.getParameter("correo");
+        String direccionEntrega = request.getParameter("direccionEntrega");
+        String password = request.getParameter("password");
+
+        Cliente cliente = new Cliente(
+                0,
+                nombre,
+                correo,
+                direccionEntrega,
+                password,
+                "cliente"
+        );
+
+        clienteDAO.insertarCliente(cliente);
+
+    } else if (accion.equals("actualizar")) {
+
+        int id = Integer.parseInt(request.getParameter("id"));
+        String nombre = request.getParameter("nombre");
+        String correo = request.getParameter("correo");
+        String direccionEntrega = request.getParameter("direccionEntrega");
+
+        clienteDAO.actualizarCliente(id, nombre, correo, direccionEntrega);
+
+    } else if (accion.equals("eliminar")) {
+
+        int id = Integer.parseInt(request.getParameter("id"));
+        clienteDAO.eliminarCliente(id);
+    }
 
     PrintWriter out = response.getWriter();
-    out.println("{\"mensaje\":\"Cliente registrado correctamente\"}");
+    out.println("{\"mensaje\":\"Operación realizada correctamente\"}");
 }
 }
